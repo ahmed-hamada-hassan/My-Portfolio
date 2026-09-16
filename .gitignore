@@ -1,0 +1,12 @@
+# Build output
+[Bb]in/
+[Oo]bj/
+
+# Visual Studio and local user settings
+.vs/
+*.user
+*.suo
+
+# Local secrets and environment overrides
+appsettings.Development.json
+appsettings.*.Development.json
