@@ -1,6 +1,7 @@
 ﻿using Domain.Errors;
 using Domain.Shared;
 using System.Text.RegularExpressions;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Domain.Entities;
 
@@ -88,12 +89,30 @@ public class Project
         return $"{slug}-{suffix}";
     }
 
-    public Result UpdateEndDate(DateOnly? endDate)
+    public Result MarkAsOngoing()
     {
-        if (endDate.HasValue && StartDate > endDate.Value)
-            return Result.Failure(ProjectErrors.InvalidDates);
+        EndDate = null;
+        return Result.Success();
+    }
 
-        EndDate = endDate;
+    public Result<ProjectImage> AddProjectImage(string url, string publicId, string altText, byte displayOrder, bool isCover)
+    {
+        var projectImageResult = ProjectImage.Create(Id, url, publicId, altText, displayOrder, isCover);
+
+        if (projectImageResult.IsFailure)
+            return Result<ProjectImage>.Failure(projectImageResult.Error!);
+
+        var projectImage = projectImageResult.Value!;
+
+        _images.Add(projectImage);
+
+        return Result<ProjectImage>.Success(projectImage);
+    }
+
+    public Result RemoveProjectImage(ProjectImage projectImage)
+    {
+        if (!_images.Remove(projectImage))
+            return Result.Failure(ProjectImageErrors.ImageNotFound);
 
         return Result.Success();
     }

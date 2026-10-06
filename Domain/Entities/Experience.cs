@@ -52,36 +52,58 @@ public class Experience
 
     public Result Update(string? companyName, string? position, ExperienceType? type, string? description, DateOnly? startDate, DateOnly? endDate)
     {
-        var newCompanyName = string.IsNullOrWhiteSpace(companyName) ? CompanyName : companyName;
-        var newPosition = string.IsNullOrWhiteSpace(position) ? Position : position;
-        var newType = type ?? Type;
-        var newDescription = string.IsNullOrWhiteSpace(description) ? Description : description;
+        if (companyName is not null &&
+            string.IsNullOrWhiteSpace(companyName))
+            return Result.Failure(
+                ExperienceErrors.InvalidCompany);
+
+        if (position is not null &&
+            string.IsNullOrWhiteSpace(position))
+            return Result.Failure(
+                ExperienceErrors.InvalidPosition);
+
+        if (description is not null &&
+            string.IsNullOrWhiteSpace(description))
+            return Result.Failure(
+                ExperienceErrors.InvalidDescription);
+
+        if (type.HasValue &&
+            !Enum.IsDefined(typeof(ExperienceType), type.Value))
+            return Result.Failure(
+                ExperienceErrors.InvalidType);
+
         var newStartDate = startDate ?? StartDate;
         var newEndDate = endDate ?? EndDate;
 
-        if (!Enum.IsDefined(typeof(ExperienceType), newType))
-            return Result.Failure(ExperienceErrors.InvalidType);
+        if (newEndDate.HasValue &&
+            newStartDate > newEndDate.Value)
+            return Result.Failure(
+                ExperienceErrors.InvalidDates);
 
-        if (newEndDate.HasValue && newStartDate > newEndDate.Value)
-            return Result.Failure(ExperienceErrors.InvalidDates);
+        if (companyName is not null)
+            CompanyName = companyName;
 
-        CompanyName = newCompanyName;
-        Position = newPosition;
-        Type = newType;
-        Description = newDescription;
-        StartDate = newStartDate;
-        EndDate = newEndDate;
+        if (position is not null)
+            Position = position;
+
+        if (type.HasValue)
+            Type = type.Value;
+
+        if (description is not null)
+            Description = description;
+
+        if (startDate.HasValue)
+            StartDate = startDate.Value;
+
+        if (endDate.HasValue)
+            EndDate = endDate.Value;
 
         return Result.Success();
     }
 
-    public Result UpdateEndDate(DateOnly? endDate)
+    public Result MarkAsOngoing()
     {
-        if (endDate.HasValue && StartDate > endDate.Value)
-            return Result.Failure(ExperienceErrors.InvalidDates);
-
-        EndDate = endDate;
-
+        EndDate = null;
         return Result.Success();
     }
 }

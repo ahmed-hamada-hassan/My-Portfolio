@@ -1,4 +1,13 @@
-﻿namespace Application.Features.Project.DTOs;
+﻿using Application.Features.Project_Images.DTOs;
 
-public record CreateProjectDTO(string Title, string Description, DateOnly StartDate,
-    DateOnly? EndDate, string? LiveURL, string? GitHubURL, IEnumerable<CreateProjectImageDTO> ProjectImages);
+namespace Application.Features.Project.DTOs;
+
+public record CreateProjectDTO(
+    string Title, 
+    string Description, 
+    DateOnly StartDate,
+    DateOnly? EndDate, 
+    string? LiveURL, 
+    string? GitHubURL, 
+    IReadOnlyList<AddProjectImageDTO> ProjectImages,
+    IReadOnlyList<Guid> SkillIds);

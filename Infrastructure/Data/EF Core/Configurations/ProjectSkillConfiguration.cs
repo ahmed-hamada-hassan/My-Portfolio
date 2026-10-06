@@ -13,12 +13,12 @@ internal sealed class ProjectSkillConfiguration : IEntityTypeConfiguration<Proje
         builder.HasOne<Project>()
             .WithMany()
             .HasForeignKey(ps => ps.ProjectId)
-            .OnDelete(DeleteBehavior.NoAction);
+            .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasOne<Skill>()
             .WithMany()
             .HasForeignKey(ps => ps.SkillId)
-            .OnDelete(DeleteBehavior.NoAction);
+            .OnDelete(DeleteBehavior.Restrict);
 
         builder.ToTable("ProjectSkills");
     }

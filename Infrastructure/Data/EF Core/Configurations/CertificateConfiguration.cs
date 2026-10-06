@@ -30,21 +30,20 @@ internal sealed class CertificateConfiguration : IEntityTypeConfiguration<Certif
             .IsRequired();
 
         builder.Property(c => c.CredentialURL)
-            .IsRequired()
+            .IsRequired(false)
             .HasMaxLength(MaxLength.CertificateCredentialURL);
+
+        builder.HasIndex(c => c.CredentialURL)
+            .IsUnique()
+            .HasFilter("[CredentialURL] IS NOT NULL");
 
         builder.Property(c => c.ImageURL)
             .IsRequired()
             .HasMaxLength(MaxLength.CertificateImageURL);
 
-        builder.Property(c => c.DisplayOrder)
-            .IsRequired();
-
-        builder.HasIndex(c => c.DisplayOrder)
-           .IsUnique();
-
-        builder.HasIndex(c => c.CredentialURL)
-            .IsUnique();
+        builder.Property(c => c.ImagePublicId)
+            .IsRequired()
+            .HasMaxLength(MaxLength.CertificateImagePublicId);
 
         builder.ToTable("Certificates");
     }

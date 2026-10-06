@@ -36,4 +36,16 @@ public class Skill
 
         return Result<Skill>.Success(skill);
     }
+
+    public Result Update(string? name, SkillType? type, string? icon)
+    {
+        if(!string.IsNullOrWhiteSpace(name))
+            Name = name;
+        if(type.HasValue && Enum.IsDefined(typeof(SkillType), type.Value))
+            Type = type.Value;
+        if (!string.IsNullOrWhiteSpace(icon))
+            Icon = icon;
+
+        return Result.Success();
+    }
 }

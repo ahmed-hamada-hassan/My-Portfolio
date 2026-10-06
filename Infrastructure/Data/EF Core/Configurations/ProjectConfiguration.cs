@@ -50,7 +50,7 @@ internal sealed class ProjectConfiguration : IEntityTypeConfiguration<Project>
         builder.HasMany(p => p.Images)
             .WithOne(pi => pi.Project)
             .HasForeignKey(pi => pi.ProjectId)
-            .OnDelete(DeleteBehavior.NoAction);
+            .OnDelete(DeleteBehavior.Cascade);
 
         builder.Metadata.FindNavigation(nameof(Project.Images))?
             .SetPropertyAccessMode(PropertyAccessMode.Field);

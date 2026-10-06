@@ -4,4 +4,4 @@ using Mediator;
 
 namespace Application.Features.Project.Command;
 
-internal sealed record CreateProjectCommand(CreateProjectDTO CreateProjectRequest) : ICommand<Result<Guid>>;
+public record CreateProjectCommand(CreateProjectDTO CreateProjectRequest) : ICommand<Result<Guid>>;

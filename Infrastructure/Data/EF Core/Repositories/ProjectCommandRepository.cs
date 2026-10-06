@@ -18,14 +18,16 @@ internal sealed class ProjectCommandRepository : IProjectCommandRepository
         return _dbContext.Projects.FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
     }
 
+    public Task<Project?> GetByIdWithImagesAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        return _dbContext.Projects
+            .Include(p => p.Images)
+            .FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
+    }
+
     public async Task AddAsync(Project project, CancellationToken cancellationToken = default)
     {
         await _dbContext.Projects.AddAsync(project, cancellationToken);
-    }
-
-    public void Update(Project project)
-    {
-        _dbContext.Projects.Update(project);
     }
 
     public void Remove(Project project)
@@ -33,8 +35,9 @@ internal sealed class ProjectCommandRepository : IProjectCommandRepository
         _dbContext.Projects.Remove(project);
     }
 
-    public Task<bool> TitleExistsAsync(string title, CancellationToken cancellationToken = default)
+    public Task<bool> TitleExistsAsync(string title, Guid? projectId, CancellationToken cancellationToken = default)
     {
-        return _dbContext.Projects.AnyAsync(p => p.Title == title, cancellationToken);
+        return _dbContext.Projects
+            .AnyAsync(p => p.Title == title && (!projectId.HasValue || p.Id != projectId.Value), cancellationToken);
     }
 }

@@ -18,6 +18,10 @@ internal sealed class ProjectImageConfiguration : IEntityTypeConfiguration<Proje
             .IsRequired()
             .HasMaxLength(MaxLength.ProjectImageURL);
 
+        builder.Property(pi => pi.PublicId)
+            .IsRequired()
+            .HasMaxLength(MaxLength.ProjectImagePublicId);
+
         builder.Property(pi => pi.AltText)
             .IsRequired()
             .HasMaxLength(MaxLength.ProjectImageAltText);

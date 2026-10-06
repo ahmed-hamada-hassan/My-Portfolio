@@ -13,8 +13,11 @@ public class AppDbContext : DbContext
     public DbSet<ProjectSkill> ProjectSkills => Set<ProjectSkill>();
     public DbSet<Experience> Experiences => Set<Experience>();
     public DbSet<Certificate> Certificates => Set<Certificate>();
-    public DbSet<ContactMessage> ContactMessages => Set<ContactMessage>();
-    public DbSet<SocialLink> SocialLinks => Set<SocialLink>();
+    public DbSet<ContactLink> SocialLinks => Set<ContactLink>();
+    public DbSet<FreelanceProfile> FreelanceProfiles => Set<FreelanceProfile>();
+    public DbSet<AboutItem> AboutItems => Set<AboutItem>();
+    public DbSet<User> Users => Set<User>();
+    public DbSet<SiteSettings> SiteSettings => Set<SiteSettings>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

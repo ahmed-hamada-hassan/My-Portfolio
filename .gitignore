@@ -7,6 +7,8 @@
 *.user
 *.suo
 
-# Local secrets and environment overrides
+# Local configuration and environment-specific settings
 appsettings.Development.json
+appsettings.Production.json
 appsettings.*.Development.json
+appsettings.*.Production.json
