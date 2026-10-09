@@ -58,12 +58,12 @@ public sealed class MaxLength
     #endregion
 
     #region SiteSettings Constants
-    public const int SiteTitle = 100;
-    public const int FullName = 100;
-    public const int JobTitle = 100;
-    public const int ProfileImageUrl = 250;
-    public const int ProfileImagePublicId = 255;
-    public const int CvUrl = 250;
-    public const int CvPublicId = 255;
+    public const int SiteSettingsSiteTitle = 100;
+    public const int SiteSettingsFullName = 100;
+    public const int SiteSettingsJobTitle = 100;
+    public const int SiteSettingsProfileImageURL = 250;
+    public const int SiteSettingsProfileImagePublicId = 255;
+    public const int SiteSettingsCVURL = 250;
+    public const int SiteSettingsCvPublicId = 255;
     #endregion
 }

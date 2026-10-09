@@ -11,11 +11,10 @@ public class SiteSettings
     public string FullName { get; private set; } = null!;
     public string JobTitle { get; private set; } = null!;
 
-    public string? ProfileImageUrl { get; private set; }
+    public string? ProfileImageURL { get; private set; }
     public string? ProfileImagePublicId { get; private set; }
 
-    public string? CvUrl { get; private set; }
-    public string? CvPublicId { get; private set; }
+    public string? CVURL { get; private set; }
 
     public bool AvailableForWork { get; private set; }
 
@@ -28,7 +27,6 @@ public class SiteSettings
         string? profileImageUrl,
         string? profileImagePublicId,
         string? cvUrl,
-        string? cvPublicId,
         bool availableForWork)
     {
         Id = Guid.NewGuid();
@@ -37,11 +35,10 @@ public class SiteSettings
         FullName = fullName;
         JobTitle = jobTitle;
 
-        ProfileImageUrl = profileImageUrl;
+        ProfileImageURL = profileImageUrl;
         ProfileImagePublicId = profileImagePublicId;
 
-        CvUrl = cvUrl;
-        CvPublicId = cvPublicId;
+        CVURL = cvUrl;
 
         AvailableForWork = availableForWork;
     }
@@ -53,7 +50,6 @@ public class SiteSettings
         string? profileImageUrl,
         string? profileImagePublicId,
         string? cvUrl,
-        string? cvPublicId,
         bool availableForWork)
     {
         if (string.IsNullOrWhiteSpace(siteTitle))
@@ -83,11 +79,6 @@ public class SiteSettings
             return Result<SiteSettings>.Failure(
                 SiteSettingsErrors.InvalidCvUrl);
 
-        if (cvPublicId is not null &&
-            string.IsNullOrWhiteSpace(cvPublicId))
-            return Result<SiteSettings>.Failure(
-                SiteSettingsErrors.InvalidCvPublicId);
-
         var siteSettings = new SiteSettings(
             siteTitle,
             fullName,
@@ -95,7 +86,6 @@ public class SiteSettings
             profileImageUrl,
             profileImagePublicId,
             cvUrl,
-            cvPublicId,
             availableForWork);
 
         return Result<SiteSettings>.Success(siteSettings);
@@ -149,26 +139,19 @@ public class SiteSettings
             return Result.Failure(
                 SiteSettingsErrors.InvalidProfileImagePublicId);
 
-        ProfileImageUrl = profileImageUrl;
+        ProfileImageURL = profileImageUrl;
         ProfileImagePublicId = profileImagePublicId;
 
         return Result.Success();
     }
 
-    public Result UpdateCv(
-        string cvUrl,
-        string cvPublicId)
+    public Result UpdateCv(string cvUrl)
     {
         if (string.IsNullOrWhiteSpace(cvUrl))
             return Result.Failure(
                 SiteSettingsErrors.InvalidCvUrl);
 
-        if (string.IsNullOrWhiteSpace(cvPublicId))
-            return Result.Failure(
-                SiteSettingsErrors.InvalidCvPublicId);
-
-        CvUrl = cvUrl;
-        CvPublicId = cvPublicId;
+        CVURL = cvUrl;
 
         return Result.Success();
     }

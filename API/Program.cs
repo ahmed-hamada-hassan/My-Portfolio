@@ -28,7 +28,10 @@ builder.Services.AddProblemDetails();
 
 builder.Services.AddOptions<CloudinaryOptions>()
     .Bind(builder.Configuration.GetSection(CloudinaryOptions.SectionName))
-    .ValidateDataAnnotations()
+    .ValidateOnStart();
+
+builder.Services.AddOptions<SiteSettingsOptions>()
+    .Bind(builder.Configuration.GetSection(SiteSettingsOptions.SectionName))
     .ValidateOnStart();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -99,7 +102,7 @@ builder.Services.AddCors(options =>
     });
 });
 
-builder.Host.UseSerilog((context, service, configuration) => configuration 
+builder.Host.UseSerilog((context, service, configuration) => configuration
     .ReadFrom.Configuration(context.Configuration)
     .ReadFrom.Services(service)
     .Enrich.FromLogContext());
@@ -124,6 +127,8 @@ app.UseRateLimiter();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseStaticFiles();
 
 app.UseSerilogRequestLogging();
 app.MapControllers();
