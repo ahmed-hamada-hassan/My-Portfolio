@@ -3,6 +3,7 @@ using Application.Options;
 using Domain.Constants;
 using FluentValidation;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,7 +13,7 @@ namespace Application.Features.Project_Images.Validators;
 internal sealed class AddProjectImageDTOValidator
     : AbstractValidator<AddProjectImageDTO>
 {
-    public AddProjectImageDTOValidator(ImageUploadOptions imageOptions)
+    public AddProjectImageDTOValidator(IOptionsSnapshot<SiteSettingsOptions> imageOptions)
     {
         RuleFor(x => x.Image)
             .Cascade(CascadeMode.Stop)
@@ -20,14 +21,14 @@ internal sealed class AddProjectImageDTOValidator
             .WithMessage("Image is required.")
             .Must(file => file!.Length > 0)
             .WithMessage("Image cannot be empty.")
-            .Must(file => file!.Length <= imageOptions.MaxFileSizeInBytes)
+            .Must(file => file!.Length <= imageOptions.Value.Images.MaxFileSizeInBytes)
             .WithMessage(
-                $"Image size must not exceed {imageOptions.MaxFileSizeInBytes / 1024 / 1024} MB.")
-            .Must(file => imageOptions.AllowedContentTypes.Contains(
+                $"Image size must not exceed {imageOptions.Value.Images.MaxFileSizeInBytes / 1024 / 1024} MB.")
+            .Must(file => imageOptions.Value.Images.AllowedContentTypes.Contains(
                 file!.ContentType,
                 StringComparer.OrdinalIgnoreCase))
             .WithMessage("Image content type is not allowed.")
-            .Must(file => HaveAllowedExtension(file, imageOptions.AllowedExtensions))
+            .Must(file => HaveAllowedExtension(file, imageOptions.Value.Images.AllowedExtensions))
             .WithMessage("Image extension is not allowed.");
 
         RuleFor(x => x.AltText)

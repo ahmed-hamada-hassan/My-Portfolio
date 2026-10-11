@@ -1,4 +1,4 @@
-﻿using Domain.Shared;
+using Domain.Shared;
 
 namespace Domain.Errors;
 
@@ -28,17 +28,9 @@ public class SiteSettingsErrors
         "SiteSettings.InvalidCvUrl",
         "CV URL cannot be empty.");
 
-    public static readonly Error InvalidCvPublicId = new(
-        "SiteSettings.InvalidCvPublicId",
-        "CV public ID cannot be empty.");
-
     public static readonly Error SiteSettingsNotFound = new(
         "SiteSettings.NotFound",
         "Site settings not found.");
-
-    public static readonly Error ProfileImageUploadFailed = new(
-        "SiteSettings.ProfileImageUploadFailed",
-        "Failed to upload profile image.");
 
     public static readonly Error CVNotFound = new(
         "SiteSettings.CVNotFound",

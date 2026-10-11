@@ -1,7 +1,6 @@
-﻿using Domain.Errors;
+using Domain.Errors;
 using Domain.Shared;
 using System.Text.RegularExpressions;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Domain.Entities;
 

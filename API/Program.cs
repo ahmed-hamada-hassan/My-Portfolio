@@ -3,12 +3,15 @@ using API.Middlewares;
 using Application;
 using Application.Behaviors;
 using Application.Interfaces.DI;
+using Application.Options;
 using FluentValidation;
 using Infrastructure;
 using Infrastructure.Data.EF_Core;
+using Infrastructure.Data.Initializer;
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+using Scalar.AspNetCore;
 using Serilog;
 using System.Text.Json.Serialization;
 
@@ -116,6 +119,11 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.MapScalarApiReference(options =>
+    {
+        options.Title = "Portfolio API";
+        options.DarkMode = true;
+    });
 }
 
 app.UseExceptionHandler();
@@ -131,6 +139,9 @@ app.UseAuthorization();
 app.UseStaticFiles();
 
 app.UseSerilogRequestLogging();
+
+await SiteSettingsInitializer.InitializeAsync(app.Services);
+
 app.MapControllers();
 
 app.Run();

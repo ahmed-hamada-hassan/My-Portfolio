@@ -17,7 +17,7 @@ internal sealed class AddProjectImagesValidator
         var imageOptions = options.Value.Images;
 
         RuleForEach(x => x.ProjectImages)
-            .SetValidator(new AddProjectImageDTOValidator(imageOptions));
+            .SetValidator(new AddProjectImageDTOValidator(options));
 
     }
 }

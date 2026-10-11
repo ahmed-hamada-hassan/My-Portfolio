@@ -1,11 +1,11 @@
-﻿using Domain.Constants;
+using Domain.Constants;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Data.EF_Core.Configurations;
 
-public class SiteSettingsConfiguration : IEntityTypeConfiguration<SiteSettings>
+internal sealed class SiteSettingsConfiguration : IEntityTypeConfiguration<SiteSettings>
 {
     public void Configure(EntityTypeBuilder<SiteSettings> builder)
     {

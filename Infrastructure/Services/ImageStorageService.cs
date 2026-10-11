@@ -1,4 +1,4 @@
-﻿using Application.Interfaces.Services;
+using Application.Interfaces.Services;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using Domain.Shared;
@@ -9,7 +9,7 @@ namespace Infrastructure.Services;
 
 internal sealed class ImageStorageService : IImageStorageService
 {
-    public readonly CloudinaryOptions _cloudinaryOptions;
+    private readonly CloudinaryOptions _cloudinaryOptions;
     private readonly Cloudinary _cloudinary;
 
     public ImageStorageService(IOptionsSnapshot<CloudinaryOptions> cloudinaryOptions)

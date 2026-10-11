@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Application.Features.Project.Command;
 
-internal sealed class UpdateProjectHandler : IRequestHandler<UpdateProjectCommand, Result>
+internal sealed class UpdateProjectHandler : ICommandHandler<UpdateProjectCommand, Result>
 {
     private readonly IProjectCommandRepository _projectRepository;
     private readonly IUnitOfWork _unitOfWork;

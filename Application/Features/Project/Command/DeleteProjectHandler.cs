@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Application.Features.Project.Command;
 
-internal sealed class DeleteProjectHandler : IRequestHandler<DeleteProjectCommand, Result>
+internal sealed class DeleteProjectHandler : ICommandHandler<DeleteProjectCommand, Result>
 {
     private readonly IProjectCommandRepository _projectCommandRepository;
     private readonly IUnitOfWork _unitOfWork;

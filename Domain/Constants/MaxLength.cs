@@ -1,4 +1,4 @@
-﻿namespace Domain.Constants;
+namespace Domain.Constants;
 
 public sealed class MaxLength
 {
@@ -64,6 +64,5 @@ public sealed class MaxLength
     public const int SiteSettingsProfileImageURL = 250;
     public const int SiteSettingsProfileImagePublicId = 255;
     public const int SiteSettingsCVURL = 250;
-    public const int SiteSettingsCvPublicId = 255;
     #endregion
 }

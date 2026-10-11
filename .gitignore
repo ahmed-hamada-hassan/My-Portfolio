@@ -7,8 +7,12 @@
 *.user
 *.suo
 
-# Local configuration and environment-specific settings
+# Environment-specific configuration
 appsettings.Development.json
 appsettings.Production.json
 appsettings.*.Development.json
 appsettings.*.Production.json
+
+# Application logs
+[Ll]ogs/
+*.log
