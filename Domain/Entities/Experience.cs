@@ -52,51 +52,29 @@ public class Experience
 
     public Result Update(string? companyName, string? position, ExperienceType? type, string? description, DateOnly? startDate, DateOnly? endDate)
     {
-        if (companyName is not null &&
-            string.IsNullOrWhiteSpace(companyName))
-            return Result.Failure(
-                ExperienceErrors.InvalidCompany);
+        if (!string.IsNullOrWhiteSpace(companyName))
+            CompanyName = companyName;
 
-        if (position is not null &&
-            string.IsNullOrWhiteSpace(position))
-            return Result.Failure(
-                ExperienceErrors.InvalidPosition);
+        if (!string.IsNullOrWhiteSpace(position))
+            Position = position;
 
-        if (description is not null &&
-            string.IsNullOrWhiteSpace(description))
-            return Result.Failure(
-                ExperienceErrors.InvalidDescription);
+        if (type.HasValue && Enum.IsDefined(typeof(ExperienceType), type.Value))
+            Type = type.Value;
 
-        if (type.HasValue &&
-            !Enum.IsDefined(typeof(ExperienceType), type.Value))
-            return Result.Failure(
-                ExperienceErrors.InvalidType);
+        if (!string.IsNullOrWhiteSpace(description))
+            Description = description;
 
         var newStartDate = startDate ?? StartDate;
         var newEndDate = endDate ?? EndDate;
 
-        if (newEndDate.HasValue &&
-            newStartDate > newEndDate.Value)
-            return Result.Failure(
-                ExperienceErrors.InvalidDates);
+        if (!newEndDate.HasValue || newStartDate <= newEndDate.Value)
+        {
+            if (startDate.HasValue)
+                StartDate = startDate.Value;
 
-        if (companyName is not null)
-            CompanyName = companyName;
-
-        if (position is not null)
-            Position = position;
-
-        if (type.HasValue)
-            Type = type.Value;
-
-        if (description is not null)
-            Description = description;
-
-        if (startDate.HasValue)
-            StartDate = startDate.Value;
-
-        if (endDate.HasValue)
-            EndDate = endDate.Value;
+            if (endDate.HasValue)
+                EndDate = endDate.Value;
+        }
 
         return Result.Success();
     }

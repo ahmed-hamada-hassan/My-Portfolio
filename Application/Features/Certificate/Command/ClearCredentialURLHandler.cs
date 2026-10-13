@@ -39,7 +39,7 @@ internal sealed class ClearCredentialURLHandler
                 command.CertificateId);
 
             return Result.Failure(
-                CertificateErrors.CertificateNotFound);
+                CertificateErrors.NotFound);
         }
 
         var result = certificate.ClearCredentialURL();

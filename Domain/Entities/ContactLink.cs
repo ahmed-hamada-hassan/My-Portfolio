@@ -40,28 +40,13 @@ public class ContactLink
 
     public Result Update(string? name, string? contact, byte? displayOrder, bool? isVisible)
     {
-        if (name is not null &&
-            string.IsNullOrWhiteSpace(name))
-            return Result.Failure(
-                ContactLinkErrors.InvalidName);
-
-        if (contact is not null &&
-            string.IsNullOrWhiteSpace(contact))
-            return Result.Failure(
-                ContactLinkErrors.InvalidContact);
-
-        if (displayOrder.HasValue &&
-            (displayOrder.Value == 0 || displayOrder.Value > 10))
-            return Result.Failure(
-                ContactLinkErrors.InvalidDisplayOrder);
-
-        if (name is not null)
+        if (!string.IsNullOrWhiteSpace(name))
             Name = name;
 
-        if (contact is not null)
+        if (!string.IsNullOrWhiteSpace(contact))
             Contact = contact;
 
-        if (displayOrder.HasValue)
+        if (displayOrder.HasValue && (displayOrder.Value != 0 && displayOrder.Value <= 10))
             DisplayOrder = displayOrder.Value;
 
         if (isVisible.HasValue)

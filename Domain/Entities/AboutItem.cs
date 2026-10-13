@@ -38,28 +38,13 @@ public class AboutItem
 
     public Result Update(string? title, string? description, byte? displayOrder, bool? isVisible)
     {
-        if (title is not null &&
-            string.IsNullOrWhiteSpace(title))
-            return Result.Failure(
-                AboutItemErrors.InvalidTitle);
-
-        if (description is not null &&
-            string.IsNullOrWhiteSpace(description))
-            return Result.Failure(
-                AboutItemErrors.InvalidDescription);
-
-        if (displayOrder.HasValue &&
-            (displayOrder.Value == 0 || displayOrder.Value > 10))
-            return Result.Failure(
-                AboutItemErrors.InvalidDisplayOrder);
-
-        if (title is not null)
+        if (!string.IsNullOrWhiteSpace(title))
             Title = title;
 
-        if (description is not null)
+        if (!string.IsNullOrWhiteSpace(description))
             Description = description;
 
-        if (displayOrder.HasValue)
+        if (displayOrder.HasValue && (displayOrder.Value != 0 && displayOrder.Value <= 10))
             DisplayOrder = displayOrder.Value;
 
         if (isVisible.HasValue)

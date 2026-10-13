@@ -48,7 +48,7 @@ public class ProjectImage
         return Result<ProjectImage>.Success(projectImage);
     }
 
-    public Result Update(string? url, string publicId, string? altText, byte? displayOrder, bool? isCover)
+    public Result Update(string? url, string? publicId, string? altText, byte? displayOrder, bool? isCover)
     {
         if (displayOrder.HasValue)
         {
@@ -63,25 +63,6 @@ public class ProjectImage
         if (!string.IsNullOrWhiteSpace(publicId))
             PublicId = publicId;
 
-        if (!string.IsNullOrWhiteSpace(altText))
-            AltText = altText;
-
-        if (isCover.HasValue)
-            IsCover = isCover.Value;
-
-        return Result.Success();
-    }
-
-
-    public Result Update(string? altText, byte? displayOrder, bool? isCover)
-    {
-        if (displayOrder.HasValue)
-        {
-            if (displayOrder.Value > 8 || displayOrder.Value < 1)
-                return Result.Failure(ProjectImageErrors.InvalidDisplayOrder);
-            DisplayOrder = displayOrder.Value;
-        }
-        
         if (!string.IsNullOrWhiteSpace(altText))
             AltText = altText;
 

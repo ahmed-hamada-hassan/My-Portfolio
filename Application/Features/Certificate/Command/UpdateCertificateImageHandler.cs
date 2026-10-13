@@ -37,7 +37,7 @@ internal sealed class UpdateCertificateImageHandler : ICommandHandler<UpdateCert
                 "Attempted to update image of a non-existent Certificate. CertificateId: {CertificateId}",
                 command.CertificateId);
 
-            return Result.Failure(CertificateErrors.CertificateNotFound);
+            return Result.Failure(CertificateErrors.NotFound);
         }
 
         var oldImagePublicId = certificate.ImagePublicId;

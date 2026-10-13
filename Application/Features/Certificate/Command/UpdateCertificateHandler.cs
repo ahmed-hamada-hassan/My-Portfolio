@@ -35,7 +35,7 @@ internal sealed class UpdateCertificateHandler : ICommandHandler<UpdateCertifica
                 "Attempted to update a non-existent Certificate. CertificateId: {CertificateId}",
                 command.CertificateId);
 
-            return Result.Failure(CertificateErrors.CertificateNotFound);
+            return Result.Failure(CertificateErrors.NotFound);
         }
 
         if (request.CredentialURL is not null)
@@ -49,7 +49,7 @@ internal sealed class UpdateCertificateHandler : ICommandHandler<UpdateCertifica
                     "Attempted to update Certificate with an existing CredentialURL. CertificateId: {CertificateId}",
                     command.CertificateId);
 
-                return Result.Failure(CertificateErrors.CredentialURLAlreadyExists);
+                return Result.Failure(CertificateErrors.CredentialUrlAlreadyExists);
             }
         }
 

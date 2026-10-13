@@ -31,19 +31,26 @@ public class Certificate
         string imageURL, string imagePublicId)
     {
         if(string.IsNullOrWhiteSpace(name))
-            return Result<Certificate>.Failure(CertificateErrors.InvalidCertificateName);
+            return Result<Certificate>.Failure(CertificateErrors.InvalidName);
 
         if (string.IsNullOrWhiteSpace(issuer))
-            return Result<Certificate>.Failure(CertificateErrors.InvalidCertificateIssuer);
+            return Result<Certificate>.Failure(CertificateErrors.InvalidIssuer);
 
         if (string.IsNullOrWhiteSpace(issuerLogoURL))
-            return Result<Certificate>.Failure(CertificateErrors.InvalidCertificateIssuerLogoURL);
+            return Result<Certificate>.Failure(CertificateErrors.InvalidIssuerLogoUrl);
+
+        if(issueDate == default)
+            return Result<Certificate>.Failure(CertificateErrors.IssueDateRequired);
+
+        if(issueDate > DateOnly.FromDateTime(DateTime.UtcNow))
+            return Result<Certificate>.Failure(CertificateErrors.IssueDateInFuture);
+
 
         if (string.IsNullOrWhiteSpace(imageURL))
-            return Result<Certificate>.Failure(CertificateErrors.InvalidCertificateImageURL);
+            return Result<Certificate>.Failure(CertificateErrors.InvalidImageUrl);
 
         if (string.IsNullOrWhiteSpace(imagePublicId))
-            return Result<Certificate>.Failure(CertificateErrors.InvalidCertificateImagePublicId);
+            return Result<Certificate>.Failure(CertificateErrors.InvalidImagePublicId);
 
         var certificate = new Certificate(name, issuer, issuerLogoURL, issueDate, 
             string.IsNullOrWhiteSpace(credentialURL) ? null : credentialURL, imageURL, imagePublicId);
@@ -54,7 +61,10 @@ public class Certificate
     public Result Update(string? name, string? issuer, string? issuerLogoURL, DateOnly? issueDate, string? credentialURL)
     {
         if(issueDate.HasValue && issueDate.Value > DateOnly.FromDateTime(DateTime.UtcNow))
-            return Result.Failure(CertificateErrors.InvalidCertificateIssueDate);
+            return Result.Failure(CertificateErrors.IssueDateInFuture);
+
+        if(issueDate.HasValue && issueDate.Value == default)
+            return Result.Failure(CertificateErrors.IssueDateRequired);
 
         if (!string.IsNullOrWhiteSpace(name))
             Name = name;
@@ -74,14 +84,13 @@ public class Certificate
         return Result.Success();
     }
 
-    public Result UpdateImage(string imageURL, string imagePublicId)
+    public Result UpdateImage(string? imageURL, string? imagePublicId)
     {
-        if (string.IsNullOrWhiteSpace(imageURL))
-            return Result.Failure(CertificateErrors.InvalidCertificateImageURL);
-        if (string.IsNullOrWhiteSpace(imagePublicId))
-            return Result.Failure(CertificateErrors.InvalidCertificateImagePublicId);
-        ImageURL = imageURL;
-        ImagePublicId = imagePublicId;
+        if (!string.IsNullOrWhiteSpace(imageURL))
+            ImageURL = imageURL;
+        if (!string.IsNullOrWhiteSpace(imagePublicId))
+            ImagePublicId = imagePublicId;
+
         return Result.Success();
     }
 

@@ -61,6 +61,7 @@ internal sealed class UpdateProjectImageHandler : ICommandHandler<UpdateProjectI
 
         string? oldUrl = null;
         string? oldPublicId = null;
+
         string? newUrl = null;
         string? newPublicId = null;
 
@@ -104,6 +105,8 @@ internal sealed class UpdateProjectImageHandler : ICommandHandler<UpdateProjectI
         else
         {
             var updateResult = projectImage.Update(
+                null,
+                null,
                 request.AltText,
                 request.DisplayOrder,
                 request.IsCover);

@@ -41,7 +41,7 @@ internal sealed class CreateCertificateHandler : ICommandHandler<CreateCertifica
                 _logger.LogWarning(
                     "Attempted to create Certificate with an existing CredentialURL.");
 
-                return Result<Guid>.Failure(CertificateErrors.CredentialURLAlreadyExists);
+                return Result<Guid>.Failure(CertificateErrors.CredentialUrlAlreadyExists);
             }
         }
 

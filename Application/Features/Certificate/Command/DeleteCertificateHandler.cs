@@ -36,7 +36,7 @@ internal sealed class DeleteCertificateHandler : ICommandHandler<DeleteCertifica
                 "Attempted to delete a non-existent Certificate. CertificateId: {CertificateId}",
                 command.CertificateId);
 
-            return Result.Failure(Domain.Errors.CertificateErrors.CertificateNotFound);
+            return Result.Failure(Domain.Errors.CertificateErrors.NotFound);
         }
 
         var imageUrl = certificate.ImageURL;

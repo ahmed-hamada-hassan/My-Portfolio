@@ -2,14 +2,41 @@ using Domain.Shared;
 
 namespace Domain.Errors;
 
-public class CertificateErrors
+public static class CertificateErrors
 {
-    public static readonly Error InvalidCertificateName = new Error("Certificate.InvalidName", "Certificate name cannot be empty.");
-    public static readonly Error InvalidCertificateIssuer = new Error("Certificate.InvalidIssuer", "Certificate issuer cannot be empty.");
-    public static readonly Error InvalidCertificateIssuerLogoURL = new Error("Certificate.InvalidIssuerLogoURL", "Certificate issuer logo URL cannot be empty.");
-    public static readonly Error InvalidCertificateImageURL = new Error("Certificate.InvalidImageURL", "Certificate image URL cannot be empty.");
-    public static readonly Error InvalidCertificateImagePublicId = new Error("Certificate.InvalidImagePublicId", "Certificate image public ID cannot be empty.");
-    public static readonly Error CredentialURLAlreadyExists = new Error("Certificate.CredentialURLAlreadyExists", "A certificate with the same credential URL already exists.");
-    public static readonly Error InvalidCertificateIssueDate = new Error("Certificate.InvalidIssueDate", "Certificate issue date cannot be in the future.");
-    public static readonly Error CertificateNotFound = new Error("Certificate.NotFound", "Certificate not found.");
+    public static readonly Error InvalidName = new(
+        "Certificate.InvalidName",
+        "Certificate name cannot be empty.");
+
+    public static readonly Error InvalidIssuer = new(
+        "Certificate.InvalidIssuer",
+        "Certificate issuer cannot be empty.");
+
+    public static readonly Error InvalidIssuerLogoUrl = new(
+        "Certificate.InvalidIssuerLogoUrl",
+        "Certificate issuer logo URL cannot be empty.");
+
+    public static readonly Error InvalidImageUrl = new(
+        "Certificate.InvalidImageUrl",
+        "Certificate image URL cannot be empty.");
+
+    public static readonly Error InvalidImagePublicId = new(
+        "Certificate.InvalidImagePublicId",
+        "Certificate image public ID cannot be empty.");
+
+    public static readonly Error CredentialUrlAlreadyExists = new(
+        "Certificate.CredentialUrlAlreadyExists",
+        "A certificate with the same credential URL already exists.");
+
+    public static readonly Error IssueDateInFuture = new(
+        "Certificate.IssueDateInFuture",
+        "Certificate issue date cannot be in the future.");
+
+    public static readonly Error IssueDateRequired = new(
+        "Certificate.IssueDateRequired",
+        "Certificate issue date is required.");
+
+    public static readonly Error NotFound = new(
+        "Certificate.NotFound",
+        "Certificate not found.");
 }
