@@ -52,6 +52,15 @@ public class Experience
 
     public Result Update(string? companyName, string? position, ExperienceType? type, string? description, DateOnly? startDate, DateOnly? endDate)
     {
+        var newStartDate = startDate ?? StartDate;
+        var newEndDate = endDate ?? EndDate;
+
+        // Validate the proposed state before changing any property.  A partial
+        // update may change only one date, so the existing counterpart must be
+        // included when evaluating the date-range invariant.
+        if (newEndDate.HasValue && newStartDate > newEndDate.Value)
+            return Result.Failure(ExperienceErrors.InvalidDates);
+
         if (!string.IsNullOrWhiteSpace(companyName))
             CompanyName = companyName;
 
@@ -64,17 +73,11 @@ public class Experience
         if (!string.IsNullOrWhiteSpace(description))
             Description = description;
 
-        var newStartDate = startDate ?? StartDate;
-        var newEndDate = endDate ?? EndDate;
+        if (startDate.HasValue)
+            StartDate = startDate.Value;
 
-        if (!newEndDate.HasValue || newStartDate <= newEndDate.Value)
-        {
-            if (startDate.HasValue)
-                StartDate = startDate.Value;
-
-            if (endDate.HasValue)
-                EndDate = endDate.Value;
-        }
+        if (endDate.HasValue)
+            EndDate = endDate.Value;
 
         return Result.Success();
     }

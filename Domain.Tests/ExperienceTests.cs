@@ -286,7 +286,7 @@ public class ExperienceTests
     }
 
     [Fact]
-    public void Update_WithStartDateAfterEndDate_KeepsOriginalDates()
+    public void Update_WithStartDateAfterEndDate_ReturnsErrorAndDoesNotMutate()
     {
         // Arrange
         var experience = CreateValidExperience();
@@ -305,12 +305,31 @@ public class ExperienceTests
         var result = experience.Update(newCompanyName, newPosition, newExperienceType, newDescription, newStartDate, newEndDate);
 
         // Assert
-        Assert.True(result.IsSuccess);
+        Assert.True(result.IsFailure);
+        Assert.Equal(ExperienceErrors.InvalidDates, result.Error);
 
-        Assert.Equal(newCompanyName, experience.CompanyName);
-        Assert.Equal(newPosition, experience.Position);
-        Assert.Equal(newExperienceType, experience.Type);
-        Assert.Equal(newDescription, experience.Description);
+        Assert.Equal("Company Name Test", experience.CompanyName);
+        Assert.Equal("Position Test", experience.Position);
+        Assert.Equal(ExperienceType.Freelance, experience.Type);
+        Assert.Equal("Description Test", experience.Description);
+        Assert.Equal(originalStartDate, experience.StartDate);
+        Assert.Equal(originalEndDate, experience.EndDate);
+    }
+
+    [Fact]
+    public void Update_WhenOnlyStartDateViolatesExistingEndDate_ReturnsErrorAndPreservesState()
+    {
+        // Arrange
+        var experience = CreateValidExperience();
+        var originalStartDate = experience.StartDate;
+        var originalEndDate = experience.EndDate;
+
+        // Act
+        var result = experience.Update(null, null, null, null, new DateOnly(2022, 1, 2), null);
+
+        // Assert
+        Assert.True(result.IsFailure);
+        Assert.Equal(ExperienceErrors.InvalidDates, result.Error);
         Assert.Equal(originalStartDate, experience.StartDate);
         Assert.Equal(originalEndDate, experience.EndDate);
     }

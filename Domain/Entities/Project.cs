@@ -96,6 +96,9 @@ public class Project
 
     public Result<ProjectImage> AddProjectImage(string url, string publicId, string altText, byte displayOrder, bool isCover)
     {
+        if (_images.Count >= 8)
+            return Result<ProjectImage>.Failure(ProjectImageErrors.MaxImagesExceeded);
+
         var projectImageResult = ProjectImage.Create(Id, url, publicId, altText, displayOrder, isCover);
 
         if (projectImageResult.IsFailure)

@@ -398,6 +398,32 @@ public class ProjectTests
     }
 
     [Fact]
+    public void AddProjectImage_WhenProjectAlreadyHasEightImages_ReturnsMaxImagesExceededError()
+    {
+        // Arrange
+        var project = CreateValidProject();
+        for (byte displayOrder = 1; displayOrder <= 8; displayOrder++)
+        {
+            var addResult = project.AddProjectImage(
+                $"https://example.com/{displayOrder}.jpg",
+                $"image-{displayOrder}",
+                $"Image {displayOrder}",
+                displayOrder,
+                false);
+            Assert.True(addResult.IsSuccess);
+        }
+
+        // Act
+        var result = project.AddProjectImage(
+            "https://example.com/overflow.jpg", "overflow", "Overflow", 1, false);
+
+        // Assert
+        Assert.True(result.IsFailure);
+        Assert.Equal(ProjectImageErrors.MaxImagesExceeded, result.Error);
+        Assert.Equal(8, project.Images.Count);
+    }
+
+    [Fact]
     public void RemoveProjectImage_WithExistingImage_RemovesImageFromProject()
     {
         // Arrange
