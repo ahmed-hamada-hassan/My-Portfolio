@@ -22,4 +22,10 @@
 		<InternalsVisibleTo Include="API" />
 	</ItemGroup>
 
+	<ItemGroup>
+		<InternalsVisibleTo Include="Application.Tests" />
+
+		<InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
+	</ItemGroup>
+
 </Project>

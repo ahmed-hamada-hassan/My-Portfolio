@@ -1,5 +1,4 @@
-﻿
-using Application.Options;
+﻿using Application.Options;
 using Domain.Constants;
 using FluentValidation;
 using Microsoft.AspNetCore.Http;

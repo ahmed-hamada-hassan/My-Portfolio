@@ -31,7 +31,7 @@ internal sealed class CreateCertificateHandler : ICommandHandler<CreateCertifica
     {
         var request = command.createCertificateRequest;
 
-        if (request.CredentialURL is not null)
+        if (!string.IsNullOrWhiteSpace(request.CredentialURL))
         {
             var credentialURLExists = await _certificateCommandRepository
             .CredentialURLExistsAsync(request.CredentialURL, null, cancellationToken);
@@ -73,9 +73,17 @@ internal sealed class CreateCertificateHandler : ICommandHandler<CreateCertifica
             await _certificateCommandRepository.AddAsync(certificate, cancellationToken);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
         }
-        catch (Exception)
+        catch
         {
-            await _imageStorageService.DeleteImageAsync(certificateImageURL, certificateImagePublicId);
+            try
+            {
+                await _imageStorageService.DeleteImageAsync(certificateImageURL, certificateImagePublicId);
+            }
+            catch (Exception rollbackEx)
+            {
+                _logger.LogError(rollbackEx, "Failed to delete orphaned image. URL: {ImageURL}, PublicId: {PublicId}", certificateImageURL, certificateImagePublicId);
+            }
+
             throw;
         }
 

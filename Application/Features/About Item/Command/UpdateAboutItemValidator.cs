@@ -3,8 +3,7 @@ using FluentValidation;
 
 namespace Application.Features.About_Item.Command;
 
-internal sealed class UpdateAboutItemValidator
-    : AbstractValidator<UpdateAboutItemCommand>
+internal sealed class UpdateAboutItemValidator : AbstractValidator<UpdateAboutItemCommand>
 {
     public UpdateAboutItemValidator()
     {
@@ -21,13 +20,16 @@ internal sealed class UpdateAboutItemValidator
 
         RuleFor(x => x.UpdateAboutItemRequest.Title)
             .NotEmpty()
-            .MaximumLength(MaxLength.AboutItemTitle);
+            .MaximumLength(MaxLength.AboutItemTitle)
+            .When(x => x.UpdateAboutItemRequest.Title is not null);
 
         RuleFor(x => x.UpdateAboutItemRequest.Description)
             .NotEmpty()
-            .MaximumLength(MaxLength.AboutItemDescription);
+            .MaximumLength(MaxLength.AboutItemDescription)
+            .When(x => x.UpdateAboutItemRequest.Description is not null);
 
         RuleFor(x => x.UpdateAboutItemRequest.DisplayOrder)
-            .InclusiveBetween((byte)1, (byte)10);
+            .InclusiveBetween((byte)1, (byte)10)
+            .When(x => x.UpdateAboutItemRequest.DisplayOrder.HasValue);
     }
 }
