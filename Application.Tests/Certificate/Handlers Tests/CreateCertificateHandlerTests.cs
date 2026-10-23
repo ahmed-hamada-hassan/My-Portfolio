@@ -1,4 +1,4 @@
-﻿using Application.Features.Certificate.Command;
+using Application.Features.Certificate.Command;
 using Application.Features.Certificate.DTOs;
 using Application.Interfaces.Data;
 using Application.Interfaces.Repositories;
@@ -50,7 +50,7 @@ public class CreateCertificateHandlerTests
             "Test Certificate Name",
             "Test Certificate Issuer",
             "Test Certificate IssuerLogoURL",
-            DateOnly.FromDateTime(DateTime.Today),
+            DateOnly.FromDateTime(DateTime.UtcNow),
             "Test Certificate CredentialURL",
             fakeImageFile
         );
@@ -95,7 +95,7 @@ public class CreateCertificateHandlerTests
             "Test Certificate Name",
             "Test Certificate Issuer",
             "Test Certificate IssuerLogoURL",
-            DateOnly.FromDateTime(DateTime.Today),
+            DateOnly.FromDateTime(DateTime.UtcNow),
             invalidCredentialURL,
             fakeImageFile
         );
@@ -134,7 +134,7 @@ public class CreateCertificateHandlerTests
             "Test Certificate Name",
             "Test Certificate Issuer",
             "Test Certificate IssuerLogoURL",
-            DateOnly.FromDateTime(DateTime.Today),
+            DateOnly.FromDateTime(DateTime.UtcNow),
             "https://example.com/duplicate-credential-url",
             fakeImageFile
         );
@@ -172,7 +172,7 @@ public class CreateCertificateHandlerTests
             "Test Certificate Name",
             "Test Certificate Issuer",
             "Test Certificate IssuerLogoURL",
-            DateOnly.FromDateTime(DateTime.Today),
+            DateOnly.FromDateTime(DateTime.UtcNow),
             "https://example.com/test-credential-url",
             fakeImageFile
         );
@@ -211,7 +211,7 @@ public class CreateCertificateHandlerTests
             "",
             "Test Certificate Issuer",
             "Test Certificate IssuerLogoURL",
-            DateOnly.FromDateTime(DateTime.Today),
+            DateOnly.FromDateTime(DateTime.UtcNow),
             "https://example.com/test-credential-url",
             fakeImageFile
         );
@@ -253,7 +253,7 @@ public class CreateCertificateHandlerTests
             "Test Certificate Name",
             "Test Certificate Issuer",
             "Test Certificate IssuerLogoURL",
-            DateOnly.FromDateTime(DateTime.Today),
+            DateOnly.FromDateTime(DateTime.UtcNow),
             "https://example.com/test-credential-url",
             fakeImageFile
         );
@@ -296,7 +296,7 @@ public class CreateCertificateHandlerTests
             "Test Certificate Name",
             "Test Certificate Issuer",
             "Test Certificate IssuerLogoURL",
-            DateOnly.FromDateTime(DateTime.Today),
+            DateOnly.FromDateTime(DateTime.UtcNow),
             "https://example.com/test-credential-url",
             fakeImageFile
         );
@@ -345,7 +345,7 @@ public class CreateCertificateHandlerTests
             "Test Certificate Name",
             "Test Certificate Issuer",
             "Test Certificate IssuerLogoURL",
-            DateOnly.FromDateTime(DateTime.Today),
+            DateOnly.FromDateTime(DateTime.UtcNow),
             "https://example.com/test-credential-url",
             fakeImageFile
         );
@@ -392,7 +392,7 @@ public class CreateCertificateHandlerTests
             "Test Certificate Name",
             "Test Certificate Issuer",
             "Test Certificate IssuerLogoURL",
-            DateOnly.FromDateTime(DateTime.Today),
+            DateOnly.FromDateTime(DateTime.UtcNow),
             "https://example.com/test-credential-url",
             fakeImageFile
         );
@@ -446,7 +446,7 @@ public class CreateCertificateHandlerTests
             "Test Certificate Name",
             "Test Certificate Issuer",
             "Test Certificate IssuerLogoURL",
-            DateOnly.FromDateTime(DateTime.Today),
+            DateOnly.FromDateTime(DateTime.UtcNow),
             "https://example.com/test-credential-url",
             fakeImageFile
         );

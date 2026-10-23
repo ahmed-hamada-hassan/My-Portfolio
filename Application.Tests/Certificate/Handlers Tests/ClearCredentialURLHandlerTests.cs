@@ -1,4 +1,4 @@
-﻿using Application.Features.Certificate.Command;
+using Application.Features.Certificate.Command;
 using Application.Interfaces.Data;
 using Application.Interfaces.Repositories;
 using Domain.Errors;
@@ -41,7 +41,7 @@ public class ClearCredentialURLHandlerTests
                 "Test Certificate Name",
                 "Test Certificate Issuer",
                 "Test Certificate IssuerLogoURL",
-                DateOnly.FromDateTime(DateTime.Today),
+                DateOnly.FromDateTime(DateTime.UtcNow),
                 "Test Certificate CredentialURL",
                 "Test Certificate ImageURL",
                 "Test Certificate Image Public Id"
@@ -67,7 +67,7 @@ public class ClearCredentialURLHandlerTests
         certificate.Name.Should().Be("Test Certificate Name");
         certificate.Issuer.Should().Be("Test Certificate Issuer");
         certificate.IssuerLogoURL.Should().Be("Test Certificate IssuerLogoURL");
-        certificate.IssueDate.Should().Be(DateOnly.FromDateTime(DateTime.Today));
+        certificate.IssueDate.Should().Be(DateOnly.FromDateTime(DateTime.UtcNow));
         certificate.CredentialURL.Should().BeNull();
         certificate.ImageURL.Should().Be("Test Certificate ImageURL");
         certificate.ImagePublicId.Should().Be("Test Certificate Image Public Id");
@@ -110,7 +110,7 @@ public class ClearCredentialURLHandlerTests
                 "Test Certificate Name",
                 "Test Certificate Issuer",
                 "Test Certificate IssuerLogoURL",
-                DateOnly.FromDateTime(DateTime.Today),
+                DateOnly.FromDateTime(DateTime.UtcNow),
                 "Test Certificate CredentialURL",
                 "Test Certificate ImageURL",
                 "Test Certificate Image Public Id"
@@ -121,12 +121,12 @@ public class ClearCredentialURLHandlerTests
             .Returns(certificate);
 
         A.CallTo(() => _unitOfWork.SaveChangesAsync(A<CancellationToken>._))
-            .ThrowsAsync(new Exception("Database error"));
+            .Throws(new Exception("Database save error"));
 
         // Act
         var act = async () => await _handler.Handle(command, CancellationToken.None);
 
         // Assert
-        await act.Should().ThrowAsync<Exception>().WithMessage("Database error");
+        await act.Should().ThrowAsync<Exception>().WithMessage("Database save error");
     }
 }
