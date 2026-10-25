@@ -191,7 +191,6 @@ Portfolio/
 │
 ├── 📁 Application.Tests/                # 502 Unit Tests for Handlers & FluentValidation rules
 ├── 📁 Domain.Tests/                     # 208 Unit Tests for Domain invariants, rules, & slug generation
-├── 📁 Infrastructure.Tests/             # Integration & adapter tests
 ├── 📁 Logs/                             # Daily rolling structured application log files
 └── 📄 Portfolio.slnx                    # Modern .NET solution file
 ```
